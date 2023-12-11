@@ -3,6 +3,8 @@ import './App.css'
 import { TaskType, Todolist } from './Todolist'
 import { v1 } from 'uuid'
 import {AddItemForm} from './AddItemForm';
+import {AppBar, Button, IconButton, Toolbar, Typography} from '@mui/material';
+import {Menu} from '@mui/icons-material';
 
 export type FilterValuesType = 'all' | 'completed' | 'active'
 type TodolistType = {
@@ -21,7 +23,6 @@ function App() {
 		tasksObj[todolistId] = filteredTasks
 		setTasks({ ...tasksObj })
 	}
-
 	function addTask(title: string, todolistId: string) {
 		let task = { id: v1(), title: title, isDone: false }
 		let tasks = tasksObj[todolistId]
@@ -29,7 +30,6 @@ function App() {
 		tasksObj[todolistId] = newTasks
 		setTasks({ ...tasksObj })
 	}
-
 	function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
 		let tasks = tasksObj[todolistId]
 		const task = tasks.find(t => t.id === taskId)
@@ -52,10 +52,8 @@ function App() {
 			setTodolists([...todolists])
 		}
 	}
-
 	const todolistId1 = v1()
 	const todolistId2 = v1()
-
 	let [todolists, setTodolists] = useState<TodolistType[]>([
 		{ id: todolistId1, title: 'What to learn', filter: 'all' },
 		{ id: todolistId2, title: 'What to buy', filter: 'all' },
@@ -78,15 +76,31 @@ function App() {
 		delete tasksObj[todolistId]
 		setTasks({...tasksObj})
 	}
-
 	function addTodolist(title: string) {
 		let newTodolist: TodolistType = {id: v1(), title, filter: 'all'}
 		setTodolists([newTodolist, ...todolists])
 		setTasks({[newTodolist.id]:[], ...tasksObj})
 	}
-
 	return (
 		<div className='App'>
+			<AppBar position="static">
+				<Toolbar>
+					<IconButton
+						size="large"
+						edge="start"
+						color="inherit"
+						aria-label="menu"
+						sx={{ mr: 2 }}
+					>
+						<Menu />
+					</IconButton>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}
+					>
+						News
+					</Typography>
+					<Button color="inherit">Login</Button>
+				</Toolbar>
+			</AppBar>
 			<AddItemForm addItem={addTodolist}/>
 
 			{todolists.map(tl => {
