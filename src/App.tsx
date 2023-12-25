@@ -7,12 +7,12 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from '@mui/icons-material';
 
 export type FilterValuesType = 'all' | 'completed' | 'active'
-type TodolistType = {
+export type TodolistType = {
   id: string
   title: string
   filter: FilterValuesType
 }
-type TasksStateType = {
+export type TasksStateType = {
   [key: string]: TaskType[]
 }
 
@@ -23,7 +23,6 @@ function App() {
     tasksObj[todolistId] = filteredTasks
     setTasks({...tasksObj})
   }
-
   function addTask(title: string, todolistId: string) {
     let task = {id: v1(), title: title, isDone: false}
     let tasks = tasksObj[todolistId]
@@ -31,7 +30,6 @@ function App() {
     tasksObj[todolistId] = newTasks
     setTasks({...tasksObj})
   }
-
   function changeStatus(taskId: string, isDone: boolean, todolistId: string) {
     let tasks = tasksObj[todolistId]
     const task = tasks.find(t => t.id === taskId)
@@ -40,14 +38,9 @@ function App() {
       setTasks({...tasksObj})
     }
   }
-
   function changeTaskTitle(taskId: string, title: string, todolistId: string) {
     const editTasks = tasksObj[todolistId].map(t => t.id === taskId ? {...t, title} : t)
     setTasks({...tasksObj, [todolistId]: editTasks})
-  }
-
-  function changeTodolistTitle(todolistId: string, title: string) {
-    return setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
@@ -56,6 +49,20 @@ function App() {
       todolist.filter = value
       setTodolists([...todolists])
     }
+  }
+  function addTodolist(title: string) {
+    let newTodolist: TodolistType = {id: v1(), title, filter: 'all'}
+    setTodolists([newTodolist, ...todolists])
+    setTasks({[newTodolist.id]: [], ...tasksObj})
+  }
+  function changeTodolistTitle(todolistId: string, title: string) {
+    return setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
+  }
+  function removeTodolist (todolistId: string) {
+    let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
+    setTodolists([...filteredTodolist])
+    delete tasksObj[todolistId]
+    setTasks({...tasksObj})
   }
 
   const todolistId1 = v1()
@@ -76,18 +83,8 @@ function App() {
       {id: v1(), title: 'Milk', isDone: true},
     ],
   })
-  let removeTodolist = (todolistId: string) => {
-    let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
-    setTodolists([...filteredTodolist])
-    delete tasksObj[todolistId]
-    setTasks({...tasksObj})
-  }
 
-  function addTodolist(title: string) {
-    let newTodolist: TodolistType = {id: v1(), title, filter: 'all'}
-    setTodolists([newTodolist, ...todolists])
-    setTasks({[newTodolist.id]: [], ...tasksObj})
-  }
+
 
   return (
     <div className="App">
