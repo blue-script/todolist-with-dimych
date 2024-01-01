@@ -5,7 +5,12 @@ import {v1} from 'uuid'
 import {AddItemForm} from './AddItemForm';
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material';
 import {Menu} from '@mui/icons-material';
-import {todolistsReducer} from './state/todolists-reducer';
+import {
+  addTodolistAC,
+  changeTodolisFiltertAC,
+  changeTodolisTitletAC, removeTodolistAC,
+  todolistsReducer
+} from './state/todolists-reducer';
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer';
 
 export type FilterValuesType = 'all' | 'completed' | 'active'
@@ -52,28 +57,16 @@ function AppWithReducers() {
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    let todolist = todolists.find(tl => tl.id === todolistId)
-    if (todolist) {
-      todolist.filter = value
-      setTodolists([...todolists])
-    }
+    dispatchToTodolistsReducer(changeTodolisFiltertAC(todolistId,value))
   }
-
   function addTodolist(title: string) {
-    let newTodolist: TodolistType = {id: v1(), title, filter: 'all'}
-    setTodolists([newTodolist, ...todolists])
-    setTasks({[newTodolist.id]: [], ...tasksObj})
+    dispatchToTodolistsReducer(addTodolistAC(title))
   }
-
   function changeTodolistTitle(todolistId: string, title: string) {
-    return setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title} : tl))
+    dispatchToTodolistsReducer(changeTodolisTitletAC(todolistId,title))
   }
-
   function removeTodolist(todolistId: string) {
-    let filteredTodolist = todolists.filter(tl => tl.id !== todolistId)
-    setTodolists([...filteredTodolist])
-    delete tasksObj[todolistId]
-    setTasks({...tasksObj})
+    dispatchToTodolistsReducer(removeTodolistAC(todolistId))
   }
 
   return (
