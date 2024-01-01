@@ -57,16 +57,21 @@ function AppWithReducers() {
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    dispatchToTodolistsReducer(changeTodolisFiltertAC(todolistId,value))
+    dispatchToTodolistsReducer(changeTodolisFiltertAC(value, todolistId))
   }
-  function addTodolist(title: string) {
-    dispatchToTodolistsReducer(addTodolistAC(title))
+  function removeTodolist(todolistId: string) {
+    const action = removeTodolistAC(todolistId)
+    dispatchToTodolistsReducer(action)
+    dispatchToTasksReducer(action)
   }
   function changeTodolistTitle(todolistId: string, title: string) {
     dispatchToTodolistsReducer(changeTodolisTitletAC(todolistId,title))
   }
-  function removeTodolist(todolistId: string) {
-    dispatchToTodolistsReducer(removeTodolistAC(todolistId))
+  function addTodolist(title: string) {
+    const action = addTodolistAC(title)
+    dispatchToTodolistsReducer(action)
+    dispatchToTasksReducer(action)
+    // ????
   }
 
   return (
