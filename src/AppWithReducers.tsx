@@ -71,7 +71,6 @@ function AppWithReducers() {
     const action = addTodolistAC(title)
     dispatchToTodolistsReducer(action)
     dispatchToTasksReducer(action)
-    // ????
   }
 
   return (
