@@ -1,16 +1,12 @@
 import React, {useCallback} from 'react'
-import {FilterValuesType} from './App'
-import {AddItemForm} from './AddItemForm';
-import {EditableSpan} from './EditableSpan';
-import {Button, IconButton} from '@mui/material';
-import Delete from '@mui/icons-material/Delete';
-import {Task} from './Task';
+import {AddItemForm} from './AddItemForm'
+import {EditableSpan} from './EditableSpan'
+import {Button, IconButton} from '@mui/material'
+import Delete from '@mui/icons-material/Delete'
+import {Task} from './Task'
+import {TaskStatuses, TaskType} from "./api/todolists-api"
+import {FilterValuesType} from "./state/todolists-reducer"
 
-export type TaskType = {
-  id: string
-  title: string
-  isDone: boolean
-}
 
 type PropsType = {
   id: string
@@ -19,7 +15,7 @@ type PropsType = {
   removeTask: (id: string, todolistId: string) => void
   changeFilter: (value: FilterValuesType, todolistId: string,) => void
   addTask: (title: string, todolistId: string) => void
-  changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+  changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
   changeTaskTitle: (taskId: string, title: string, todolistId: string) => void
   changeTodolistTitle: (todolistId: string, title: string) => void
   filter: FilterValuesType
@@ -44,16 +40,16 @@ export const Todolist = React.memo(function (props: PropsType) {
 
   let tasksForTodolist = props.tasks
   if (props.filter === 'completed') {
-    tasksForTodolist = props.tasks.filter(t => t.isDone)
+    tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.Completed)
   }
   if (props.filter === 'active') {
-    tasksForTodolist = props.tasks.filter(t => !t.isDone)
+    tasksForTodolist = props.tasks.filter(t => t.status === TaskStatuses.New)
   }
   return (
     <div>
       <h3><EditableSpan title={props.title} changeTaskTitle={changeTodolistTitle}/>
-        <IconButton aria-label='delete' onClick={removeTodolist}>
-          <Delete fontSize='inherit'/>
+        <IconButton aria-label="delete" onClick={removeTodolist}>
+          <Delete fontSize="inherit"/>
         </IconButton>
       </h3>
       <AddItemForm addItem={addTask}/>
@@ -76,14 +72,14 @@ export const Todolist = React.memo(function (props: PropsType) {
           All
         </Button>
         <Button
-          color='primary'
+          color="primary"
           variant={props.filter === 'active' ? 'contained' : 'text'}
           onClick={onActiveClickHandler}
         >
           Active
         </Button>
         <Button
-          color='secondary'
+          color="secondary"
           variant={props.filter === 'completed' ? 'contained' : 'text'}
           onClick={onCompletedClickHandler}
         >
