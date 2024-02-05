@@ -19,7 +19,7 @@ export type TodolistType = {
   order: number
 }
 
-type ResponseType<D = {}> = {
+export type ResponseType<D = {}> = {
   resultCode: number
   messages: string[]
   fieldsErrors: string[]
@@ -61,10 +61,10 @@ type GetTasksResponse = {
   error: string | null
 }
 
-type TasksResponseType<T = {}> = {
+export type TasksResponseType<D = {}> = {
   resultCode: number
   messages: string[]
-  data: T
+  data: D
 }
 
 export type UpdateTaskModelType = {
