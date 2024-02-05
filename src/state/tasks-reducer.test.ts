@@ -3,12 +3,13 @@ import {
   addTodolistAC,
   changeTaskStatusAC,
   changeTaskTitleAC,
-  removeTaskAC,
+  removeTaskAC, setTasksAC,
   tasksReducer
 } from './tasks-reducer'
 import {TasksStateType} from '../App'
 import {v1} from 'uuid'
 import {TaskPriorities, TaskStatuses} from "../api/todolists-api"
+import {setTodolistsAC} from "./todolists-reducer"
 
 let startState: TasksStateType
 beforeEach(() => {
@@ -149,5 +150,32 @@ test('new array should be added when new todolist is added', () => {
 
   expect(keys.length).toBe(3)
   expect(endState[newKey]).toEqual([])
+})
+
+test('empty arrays should be added then we set todolists', () => {
+  const action = setTodolistsAC([
+    {id: '1', title: 'title 1', order: 0, addedDate: ''},
+    {id: '2', title: 'title 2', order: 0, addedDate: ''},
+  ])
+
+  const endState = tasksReducer({}, action)
+
+  const keys = Object.keys(endState)
+
+  expect(keys.length).toBe(2)
+  expect(endState['1']).toStrictEqual([])
+  expect(endState['2']).toStrictEqual([])
+})
+
+test('tasks should be added for todolist', () => {
+  const action = setTasksAC('todolistId1', startState['todolistId1'])
+
+  const endState = tasksReducer({
+    'todolistId2': [],
+    'todolistId1': [],
+  }, action)
+
+  expect(endState['todolistId2'].length).toBe(0)
+  expect(endState['todolistId1'].length).toBe(3)
 })
 
