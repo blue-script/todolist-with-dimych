@@ -5,7 +5,7 @@ import {AddItemForm} from './AddItemForm'
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material'
 import {Menu} from '@mui/icons-material'
 import {
-  addTodolistAC,
+  addTodolistAC, addTodolistTC,
   changeTodolisFiltertAC,
   changeTodolisTitletAC,
   fetchTodolistsTC,
@@ -63,7 +63,7 @@ function AppWithRedux() {
   }, [dispatch])
 
   const addTodolist = useCallback((title: string) => {
-    dispatch(addTodolistAC(title))
+    dispatch(addTodolistTC(title))
   }, [dispatch])
 
   return (
