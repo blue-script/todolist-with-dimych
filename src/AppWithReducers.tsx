@@ -7,8 +7,8 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from '@mui/icons-material'
 import {
   addTodolistAC,
-  changeTodolisFiltertAC,
-  changeTodolisTitletAC, FilterValuesType,
+  changeTodolistTitleAC,
+  changeTodolistFilterAC, FilterValuesType,
   removeTodolistAC,
   todolistsReducer
 } from './state/todolists-reducer'
@@ -107,7 +107,7 @@ function AppWithReducers() {
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {
-    dispatchToTodolistsReducer(changeTodolisFiltertAC(value, todolistId))
+    dispatchToTodolistsReducer(changeTodolistFilterAC(value, todolistId))
   }
 
   function removeTodolist(todolistId: string) {
@@ -117,7 +117,7 @@ function AppWithReducers() {
   }
 
   function changeTodolistTitle(todolistId: string, title: string) {
-    dispatchToTodolistsReducer(changeTodolisTitletAC(todolistId, title))
+    dispatchToTodolistsReducer(changeTodolistTitleAC(todolistId, title))
   }
 
   function addTodolist(title: string) {

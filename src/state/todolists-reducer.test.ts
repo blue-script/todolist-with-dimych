@@ -1,7 +1,7 @@
 import {
   addTodolistAC,
-  changeTodolisFiltertAC,
-  changeTodolisTitletAC, FilterValuesType,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC, FilterValuesType,
   removeTodolistAC, setTodolistsAC, TodolistDomainType,
   todolistsReducer
 } from './todolists-reducer'
@@ -68,7 +68,7 @@ test('correct todolist should change its name', () => {
     {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0}
   ]
 
-  const action = changeTodolisTitletAC(todolistId2, newTodolistTitle)
+  const action = changeTodolistTitleAC(todolistId2, newTodolistTitle)
 
   const endState = todolistsReducer(startState, action)
 
@@ -79,7 +79,7 @@ test('correct todolist should change its name', () => {
 test('correct filter of todolist should be changed', () => {
   let newFilter: FilterValuesType = 'completed'
 
-  const action = changeTodolisFiltertAC(newFilter, startState[1].id)
+  const action = changeTodolistFilterAC(newFilter, startState[1].id)
 
   const endState = todolistsReducer(startState, action)
 
