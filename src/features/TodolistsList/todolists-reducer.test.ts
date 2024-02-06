@@ -6,7 +6,7 @@ import {
   todolistsReducer
 } from './todolists-reducer'
 import {v1} from 'uuid'
-import {TodolistType} from "../api/todolists-api"
+import {TodolistType} from "../../api/todolists-api"
 
 let startState: Array<TodolistDomainType>
 beforeEach(()=>{

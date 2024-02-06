@@ -1,8 +1,8 @@
 import React, {useReducer} from 'react'
-import './App.css'
-import {Todolist} from './Todolist'
+import '../app/App.css'
+import {Todolist} from '../features/TodolistsList/Todolist'
 import {v1} from 'uuid'
-import {AddItemForm} from './AddItemForm'
+import {AddItemForm} from '../components/AddItemForm/AddItemForm'
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material'
 import {Menu} from '@mui/icons-material'
 import {
@@ -11,9 +11,9 @@ import {
   changeTodolistFilterAC, FilterValuesType,
   removeTodolistAC,
   todolistsReducer
-} from './state/todolists-reducer'
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC, tasksReducer} from './state/tasks-reducer'
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api"
+} from '../features/TodolistsList/todolists-reducer'
+import {addTaskAC, removeTaskAC, tasksReducer, updateTaskAC} from '../features/TodolistsList/tasks-reducer'
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api"
 
 export type TasksStateType = {
   [key: string]: TaskType[]
@@ -99,11 +99,11 @@ function AppWithReducers() {
   }
 
   function changeStatus(taskId: string, status: TaskStatuses, todolistId: string) {
-    dispatchToTasksReducer(changeTaskStatusAC(taskId, status, todolistId))
+    dispatchToTasksReducer(updateTaskAC(taskId, {status}, todolistId))
   }
 
   function changeTaskTitle(taskId: string, title: string, todolistId: string) {
-    dispatchToTasksReducer(changeTaskTitleAC(taskId, title, todolistId))
+    dispatchToTasksReducer(updateTaskAC(taskId, {title}, todolistId))
   }
 
   function changeFilter(value: FilterValuesType, todolistId: string) {

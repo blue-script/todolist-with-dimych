@@ -1,12 +1,12 @@
 import React, {useState} from 'react'
-import './App.css'
-import {Todolist} from './Todolist'
+import '../app/App.css'
+import {Todolist} from '../features/TodolistsList/Todolist'
 import {v1} from 'uuid'
-import {AddItemForm} from './AddItemForm'
+import {AddItemForm} from '../components/AddItemForm/AddItemForm'
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@mui/material'
 import {Menu} from '@mui/icons-material'
-import {TaskPriorities, TaskStatuses, TaskType} from "./api/todolists-api"
-import {FilterValuesType, TodolistDomainType} from "./state/todolists-reducer"
+import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api"
+import {FilterValuesType, TodolistDomainType} from "../features/TodolistsList/todolists-reducer"
 
 
 export type TasksStateType = {
