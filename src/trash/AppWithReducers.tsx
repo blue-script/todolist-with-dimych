@@ -23,8 +23,8 @@ function AppWithReducers() {
   const todolistId1 = v1()
   const todolistId2 = v1()
   let [todolists, dispatchToTodolistsReducer] = useReducer(todolistsReducer, [
-    {id: todolistId1, title: 'What to learn', filter: 'all', addedDate: '', order: 0},
-    {id: todolistId2, title: 'What to buy', filter: 'all', addedDate: '', order: 0},
+    {id: todolistId1, title: 'What to learn', filter: 'all',entityStatus: 'idle', addedDate: '', order: 0},
+    {id: todolistId2, title: 'What to buy', filter: 'all',entityStatus: 'idle', addedDate: '', order: 0},
   ])
   let [tasksObj, dispatchToTasksReducer] = useReducer(tasksReducer, {
     [todolistId1]: [
@@ -170,8 +170,7 @@ function AppWithReducers() {
                   <Paper style={{padding: '10px'}}>
                     <Todolist
                       key={tl.id}
-                      id={tl.id}
-                      title={tl.title}
+                      todolist={tl}
                       tasks={tasksForTodolist}
                       removeTask={removeTask}
                       changeFilter={changeFilter}
@@ -179,7 +178,6 @@ function AppWithReducers() {
                       changeTaskStatus={changeStatus}
                       changeTaskTitle={changeTaskTitle}
                       changeTodolistTitle={changeTodolistTitle}
-                      filter={tl.filter}
                       removeTodolist={removeTodolist}
                     />
                   </Paper>

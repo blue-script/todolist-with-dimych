@@ -4,6 +4,7 @@ import './index.css';
 import AppWithRedux from './app/App';
 import {Provider} from 'react-redux';
 import {store} from './app/store';
+import App from "./app/App";
 
 
 const root = ReactDOM.createRoot(
@@ -11,7 +12,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <Provider store={store}>
-    <AppWithRedux />
+    <App />
   </Provider>
 );
 

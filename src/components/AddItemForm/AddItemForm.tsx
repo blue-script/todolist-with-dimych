@@ -4,9 +4,10 @@ import {Add} from '@mui/icons-material';
 
 type AddItemFormPropsType = {
   addItem: (newTaskTitle: string) => void
+  disabled?: boolean
 }
 
-export const AddItemForm = React.memo ((props: AddItemFormPropsType) => {
+export const AddItemForm = React.memo (({addItem, disabled = false}: AddItemFormPropsType) => {
   console.log('AddItemForm is called')
   const [newTaskTitle, setNewTaskTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -18,12 +19,12 @@ export const AddItemForm = React.memo ((props: AddItemFormPropsType) => {
       setError(null)
     }
     if (e.charCode === 13) {
-      addItem()
+      addItemHandler()
     }
   }
-  const addItem = () => {
+  const addItemHandler = () => {
     if (newTaskTitle.trim() !== '') {
-      props.addItem(newTaskTitle.trim())
+      addItem(newTaskTitle.trim())
       setNewTaskTitle('')
     } else {
       setError('This field is required')
@@ -39,8 +40,9 @@ export const AddItemForm = React.memo ((props: AddItemFormPropsType) => {
       onKeyPress={onKeyPressHandler}
       error={!!error}
       helperText={error}
+      disabled={disabled}
     />
-    <IconButton onClick={addItem} color="primary">
+    <IconButton onClick={addItemHandler} color="primary" disabled={disabled}>
       <Add />
     </IconButton>
   </div>
