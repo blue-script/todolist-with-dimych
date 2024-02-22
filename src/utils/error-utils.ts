@@ -1,8 +1,8 @@
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../app/app-reducer";
-import {TasksResponseType} from "../api/todolists-api";
+import {ResponseType, TasksResponseType} from "../api/todolists-api";
 import {Dispatch} from "redux";
 
-export const handleServerAppError = <D>(data: TasksResponseType<D>, dispatch: Dispatch<SetAppErrorActionType | SetAppStatusActionType>) => {
+export const handleServerAppError = <D>(data: TasksResponseType<D> | ResponseType<D>, dispatch: Dispatch<SetAppErrorActionType | SetAppStatusActionType>) => {
     if (data.messages) {
         dispatch(setAppErrorAC(data.messages[0]))
     } else {
