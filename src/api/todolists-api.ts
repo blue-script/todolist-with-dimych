@@ -29,13 +29,13 @@ export const todolistsApi = {
     return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
   },
   deleteTask(todolistId: string, taskId: string) {
-    return instance.delete<TasksResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
   createTask(todolistId: string, title: string) {
-    return instance.post<TasksResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: title})
+    return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: title})
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-    return instance.put<TasksResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
   }
 }
 
@@ -82,11 +82,6 @@ type GetTasksResponse = {
   items: TaskType[]
   totalCount: number
   error: string | null
-}
-export type TasksResponseType<D = {}> = {
-  resultCode: number
-  messages: string[]
-  data: D
 }
 export type UpdateTaskModelType = {
   title: string
