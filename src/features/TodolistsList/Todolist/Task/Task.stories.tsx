@@ -23,6 +23,7 @@ export const TaskBaseExample = () => {
         priority: TaskPriorities.Low,
         order: 0, completed: true, description: ''
       }}
+      entityStatus={'idle'}
       todolistId={'todolistId1'}
       removeTask={removeTaskCallback}
       changeTaskTitle={changeTaskTitleCallback}
@@ -37,6 +38,7 @@ export const TaskBaseExample = () => {
         priority: TaskPriorities.Low,
         order: 0, completed: true, description: ''
       }}
+      entityStatus={'idle'}
       todolistId={'todolistId2'}
       removeTask={removeTaskCallback}
       changeTaskTitle={changeTaskTitleCallback}

@@ -7,14 +7,14 @@ import {Task} from './Todolist/Task/Task'
 import {TaskStatuses, TaskType} from "../../api/todolists-api"
 import {FilterValuesType, TodolistDomainType} from "./todolists-reducer"
 import {useDispatch} from "react-redux"
-import {fetchTasksTC} from "./tasks-reducer"
+import {fetchTasksTC, TaskDomainType} from "./tasks-reducer"
 import {ThunkDispatch} from "redux-thunk"
 import {ActionType, AppRootStateType} from "../../app/store"
 
 
 type PropsType = {
     todolist: TodolistDomainType
-    tasks: Array<TaskType>
+    tasks: Array<TaskDomainType>
     removeTask: (id: string, todolistId: string) => void
     changeFilter: (value: FilterValuesType, todolistId: string,) => void
     addTask: (title: string, todolistId: string) => void
@@ -58,8 +58,9 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
     }
     return (
         <div>
-            <h3><EditableSpan title={props.todolist.title} changeTaskTitle={changeTodolistTitle}/>
-                <IconButton aria-label="delete" onClick={removeTodolist} disabled={props.todolist.entityStatus === 'loading'}>
+            <h3><EditableSpan title={props.todolist.title} changeTaskTitle={changeTodolistTitle} disabled={props.todolist.entityStatus === 'loading'}/>
+                <IconButton aria-label="delete" onClick={removeTodolist}
+                            disabled={props.todolist.entityStatus === 'loading'}>
                     <Delete fontSize="inherit"/>
                 </IconButton>
             </h3>
@@ -67,6 +68,7 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
             <div>
                 {tasksForTodolist.map(t => <Task
                     key={t.id}
+                    entityStatus={t.entityStatus}
                     task={t}
                     todolistId={props.todolist.id}
                     removeTask={props.removeTask}

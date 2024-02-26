@@ -7,13 +7,11 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from '@mui/icons-material'
 import {TaskPriorities, TaskStatuses, TaskType} from "../api/todolists-api"
 import {FilterValuesType, TodolistDomainType} from "../features/TodolistsList/todolists-reducer"
-import {useSelector} from "react-redux";
-import {AppRootStateType} from "../app/store";
-import {RequestStatusType} from "../app/app-reducer";
+import {TaskDomainType} from "../features/TodolistsList/tasks-reducer";
 
 
 export type TasksStateType = {
-    [key: string]: TaskType[]
+    [key: string]: TaskDomainType[]
 }
 
 type PropsType = {
@@ -33,6 +31,7 @@ function AppOld({demo = false}: PropsType) {
                 id: v1(),
                 title: 'HTML&CSS',
                 status: TaskStatuses.Completed,
+                entityStatus: 'idle',
                 todoListId: todolistId1,
                 addedDate: '',
                 startDate: '',
@@ -46,6 +45,7 @@ function AppOld({demo = false}: PropsType) {
                 id: v1(),
                 title: 'JS',
                 status: TaskStatuses.Completed,
+                entityStatus: 'idle',
                 todoListId: todolistId1,
                 addedDate: '',
                 startDate: '',
@@ -62,6 +62,7 @@ function AppOld({demo = false}: PropsType) {
                 id: v1(),
                 title: 'Book',
                 status: TaskStatuses.New,
+                entityStatus: 'idle',
                 todoListId: todolistId2,
                 addedDate: '',
                 startDate: '',
@@ -75,6 +76,7 @@ function AppOld({demo = false}: PropsType) {
                 id: v1(),
                 title: 'Milk',
                 status: TaskStatuses.Completed,
+                entityStatus: 'idle',
                 todoListId: todolistId2,
                 addedDate: '',
                 startDate: '',

@@ -97,6 +97,7 @@ export const addTodolistTC = (title: string) =>
 export const changeTodolistTitleTC = (todolistId: string, title: string) =>
     (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC("loading"))
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
         todolistsApi.updateTodolist(todolistId, title)
             .then(res => {
                 if (res.data.resultCode === 0) {

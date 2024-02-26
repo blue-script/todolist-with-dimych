@@ -24,14 +24,14 @@ const initialGlobalState: AppRootStateType = {
         ["todolistId1"]: [
             {
                 id: v1(), title: "HTML&CSS", todoListId: "todolistId1",
-                status: TaskStatuses.New,
+                status: TaskStatuses.New, entityStatus: 'idle',
                 addedDate: '', startDate: '', deadline: '',
                 priority: TaskPriorities.Low,
                 order: 0, completed: true, description: ''
             },
             {
                 id: v1(), title: "JS", todoListId: "todolistId1",
-                status: TaskStatuses.New,
+                status: TaskStatuses.New, entityStatus: 'idle',
                 addedDate: '', startDate: '', deadline: '',
                 priority: TaskPriorities.Low,
                 order: 0, completed: true, description: ''
@@ -40,14 +40,14 @@ const initialGlobalState: AppRootStateType = {
         ["todolistId2"]: [
             {
                 id: v1(), title: "Milk", todoListId: "todolistId2",
-                status: TaskStatuses.New,
+                status: TaskStatuses.New, entityStatus: 'idle',
                 addedDate: '', startDate: '', deadline: '',
                 priority: TaskPriorities.Low,
                 order: 0, completed: true, description: ''
             },
             {
                 id: v1(), title: "React Book", todoListId: "todolistId2",
-                status: TaskStatuses.New,
+                status: TaskStatuses.New, entityStatus: 'idle',
                 addedDate: '', startDate: '', deadline: '',
                 priority: TaskPriorities.Low,
                 order: 0, completed: true, description: ''
