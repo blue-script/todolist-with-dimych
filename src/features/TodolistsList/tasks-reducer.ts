@@ -11,6 +11,7 @@ import {Dispatch} from "redux"
 import {AppRootStateType} from "../../app/store"
 import {setAppErrorAC, SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+import {AxiosError} from "axios";
 
 const initialState: TasksStateType = {}
 export const tasksReducer = (state: TasksStateType = initialState, action: TasksActionsType): TasksStateType => {
@@ -61,6 +62,7 @@ export const fetchTasksTC = (todolistId: string) =>
         dispatch(setAppStatusAC('loading'))
         todolistsApi.getTasks(todolistId)
             .then(res => {
+                console.log(res.data.error, typeof res.data.error)
                 if (!res.data.error) {
                     dispatch(setTasksAC(todolistId, res.data.items))
                     dispatch(setAppStatusAC("succeeded"))
@@ -69,7 +71,7 @@ export const fetchTasksTC = (todolistId: string) =>
                     dispatch(setAppStatusAC("failed"))
                 }
             })
-            .catch(error => {
+            .catch((error: AxiosError<ErrorType>) => {
                 handleServerNetworkError(error, dispatch)
             })
     }
@@ -85,7 +87,7 @@ export const removeTaskTC = (todolistId: string, taskId: string) =>
                     handleServerAppError(res.data, dispatch)
                 }
             })
-            .catch(error => {
+            .catch((error: AxiosError<ErrorType>) => {
                 handleServerNetworkError(error, dispatch)
             })
     }
@@ -101,7 +103,7 @@ export const addTaskTC = (todolistId: string, title: string) =>
                     handleServerAppError(res.data, dispatch)
                 }
             })
-            .catch(error => {
+            .catch((error: AxiosError<ErrorType>) => {
                 handleServerNetworkError(error, dispatch)
             })
     }
@@ -137,7 +139,7 @@ export const changeTaskTC = (taskId: string, domainModel: UpdateDomainTaskModelT
                     handleServerAppError(res.data, dispatch)
                 }
             })
-            .catch(error => {
+            .catch((error: AxiosError<ErrorType>) => {
                 handleServerNetworkError(error, dispatch)
             })
     }
@@ -166,3 +168,6 @@ export type TasksStateType = {
 type ThunkDispatch = Dispatch<TasksActionsType
     | SetAppStatusActionType
     | SetAppErrorActionType>
+type ErrorType = {
+    message: string
+}
