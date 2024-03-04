@@ -6,7 +6,7 @@ import {AppRootStateType} from "../../app/store";
 import {setAppErrorAC} from "../../app/app-reducer";
 
 export function ErrorSnackbar() {
-    const error = useSelector<AppRootStateType, string | null>(state=> state.app.error)
+    const error = useSelector<AppRootStateType, string | null>(state => state.app.error)
     const dispatch = useDispatch()
 
     const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -20,7 +20,11 @@ export function ErrorSnackbar() {
 
     return (
         <div>
-            <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={isOpen}
+                      autoHideDuration={6000}
+                      onClose={handleClose}
+                      anchorOrigin={{horizontal: 'center', vertical: 'bottom'}}
+            >
                 <Alert
                     onClose={handleClose}
                     severity="error"
