@@ -49,7 +49,7 @@ export const changeTodolistEntityStatusAC = (id: string, status: RequestStatusTy
     ({type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, status} as const)
 export const setTodolistsAC = (todolists: TodolistType[]) =>
     ({type: 'SET-TODOLISTS', todolists} as const)
-export const clearTodolistsDataAC = () => ({type: 'CLEAR-DATA'} as const)
+export const clearDataAC = () => ({type: 'CLEAR-DATA'} as const)
 
 // thunks
 export const fetchTodolistsTC = () =>
@@ -136,7 +136,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) =>
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
-export type ClearDataActionType = ReturnType<typeof clearTodolistsDataAC>
+export type ClearDataActionType = ReturnType<typeof clearDataAC>
 export type TodolistsActionsType =
     | RemoveTodolistActionType
     | AddTodolistActionType

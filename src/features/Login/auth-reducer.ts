@@ -3,6 +3,7 @@ import {SetAppErrorActionType, setAppStatusAC, SetAppStatusActionType} from "../
 import {authAPI, LoginParamsType} from "../../api/todolists-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 import {AxiosError} from "axios";
+import {clearDataAC, ClearDataActionType} from "../TodolistsList/todolists-reducer";
 
 const initialState: InitialStateType = {
     isLoggedIn: false,
@@ -37,14 +38,14 @@ export const loginTC = (data: LoginParamsType) =>
                 handleServerNetworkError(error, dispatch)
             })
     }
-    export const logoutTC = () =>
+export const logoutTC = () =>
     (dispatch: ThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         authAPI.logOut()
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(false))
-                    dispatch(clearTodolistsDataAC())
+                    dispatch(clearDataAC())
                     dispatch(setAppStatusAC("succeeded"))
                 } else {
                     handleServerAppError(res.data, dispatch)
