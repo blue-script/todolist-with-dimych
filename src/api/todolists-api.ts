@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios, {AxiosResponse} from "axios"
 
 const settings = {
     withCredentials: true,
@@ -19,13 +19,13 @@ export type LoginParamsType = {
 }
 //api
 export const authAPI = {
-    login(data: LoginParamsType) {
-        return instance.post<ResponseType<{userId?: number}>>('auth/login', data)
-    },
     me() {
         return instance.get<ResponseType<{id: number, email: string, login: string}>>('auth/me')
     },
-    logout() {
+    logIn(data: LoginParamsType) {
+        return instance.post<ResponseType<{userId?: number}>,AxiosResponse<ResponseType<{userId?: number}>>, LoginParamsType>('auth/login', data)
+    },
+    logOut() {
         return instance.delete<ResponseType<{}>>('auth/login')
     }
 }
@@ -40,7 +40,7 @@ export const todolistsApi = {
         return instance.delete<ResponseType>(`todo-lists/${id}`)
     },
     updateTodolist(id: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${id}`, {title: title})
+        return instance.put<ResponseType, AxiosResponse<ResponseType>, { title: string }>(`todo-lists/${id}`, {title});
     },
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
@@ -49,10 +49,10 @@ export const todolistsApi = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: title})
+        return instance.post<ResponseType<{ item: TaskType }>, AxiosResponse<ResponseType<{ item: TaskType }>>, { title: string }>(`todo-lists/${todolistId}/tasks`, {title});
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+        return instance.put<ResponseType<{ item: TaskType }>, AxiosResponse<ResponseType<{ item: TaskType }>>, UpdateTaskModelType>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
     }
 }
 
