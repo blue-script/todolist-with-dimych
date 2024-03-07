@@ -44,6 +44,7 @@ export const loginTC = (data: LoginParamsType) =>
             .then(res => {
                 if (res.data.resultCode === 0) {
                     dispatch(setIsLoggedInAC(false))
+                    dispatch(clearTodolistsDataAC())
                     dispatch(setAppStatusAC("succeeded"))
                 } else {
                     handleServerAppError(res.data, dispatch)
@@ -59,7 +60,7 @@ export type AuthActionsType = ReturnType<typeof setIsLoggedInAC>
 type InitialStateType = {
     isLoggedIn: boolean
 }
-type ThunkDispatch = Dispatch<AuthActionsType | SetAppStatusActionType | SetAppErrorActionType>
+type ThunkDispatch = Dispatch<AuthActionsType | SetAppStatusActionType | SetAppErrorActionType | ClearDataActionType>
 type ErrorType = {
     message: string
 }

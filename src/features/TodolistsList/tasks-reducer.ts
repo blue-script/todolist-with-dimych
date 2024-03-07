@@ -1,5 +1,5 @@
 import {
-    AddTodolistActionType,
+    AddTodolistActionType, ClearDataActionType,
     FilterValuesType,
     RemoveTodolistActionType,
     SetTodolistsActionType
@@ -52,6 +52,8 @@ export const tasksReducer = (state: TasksStateType = initialState, action: Tasks
             return {...state, [action.todolistId]: action.tasks.map(tk => ({...tk, entityStatus: 'idle'}))}
         case 'CHANGE-TASK-ENTITY-STATUS':
             return {...state, [action.todolistId]: state[action.todolistId].map(tk => tk.id === action.taskId ? {...tk, entityStatus: action.status} : tk)}
+        case "CLEAR-DATA":
+            return initialState
         default:
             return state
     }
@@ -179,6 +181,7 @@ export type TasksActionsType =
     | SetTodolistsActionType
     | ReturnType<typeof setTasksAC>
     | ReturnType<typeof changeTaskEntityStatusAC>
+    | ClearDataActionType
 export type TasksStateType = {
     [key: string]: TaskDomainType[]
 }

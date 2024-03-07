@@ -8,6 +8,10 @@ import {
     SetAppStatusActionType
 } from "../../app/app-reducer";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
+import {ActionType, AppRootStateType, AppThunkDispatch} from "../../app/store";
+import {useDispatch} from "react-redux";
+import {useEffect} from "react";
+import {fetchTasksTC} from "./tasks-reducer";
 
 const initialState: TodolistDomainType[] = []
 
@@ -25,6 +29,8 @@ export const todolistsReducer = (state: TodolistDomainType[] = initialState, act
             return state.map(tl => tl.id === action.id ? {...tl, entityStatus: action.status} : tl)
         case 'SET-TODOLISTS':
             return action.todolists.map(tl => ({...tl, filter: 'all', entityStatus: 'idle'}))
+        case "CLEAR-DATA":
+            return initialState
         default:
             return state
     }
@@ -43,19 +49,33 @@ export const changeTodolistEntityStatusAC = (id: string, status: RequestStatusTy
     ({type: 'CHANGE-TODOLIST-ENTITY-STATUS', id, status} as const)
 export const setTodolistsAC = (todolists: TodolistType[]) =>
     ({type: 'SET-TODOLISTS', todolists} as const)
+export const clearTodolistsDataAC = () => ({type: 'CLEAR-DATA'} as const)
 
 // thunks
 export const fetchTodolistsTC = () =>
-    (dispatch: ThunkDispatch) => {
+    (dispatch: AppThunkDispatch) => {
         dispatch(setAppStatusAC('loading'))
         todolistsApi.getTodolists()
             .then(res => {
                 if (res.data) {
                     dispatch(setTodolistsAC(res.data))
                     dispatch(setAppStatusAC("succeeded"))
+                    return res.data
                 } else {
                     dispatch(setAppErrorAC('some error occurred'))
                 }
+            })
+            .then(todos => {
+                todos?.forEach(tl => {
+                    dispatch(fetchTasksTC(tl.id))
+                })
+
+                // const dispatch: ThunkDispatch<AppRootStateType, any, ActionType> = useDispatch()
+                //
+                // useEffect(() => {
+                //     if (demo) return
+                //     dispatch(fetchTasksTC(props.todolist.id))
+                // }, [])
             })
             .catch(error => {
                 handleServerNetworkError(error, dispatch)
@@ -116,6 +136,7 @@ export const changeTodolistTitleTC = (todolistId: string, title: string) =>
 export type RemoveTodolistActionType = ReturnType<typeof removeTodolistAC>
 export type AddTodolistActionType = ReturnType<typeof addTodolistAC>
 export type SetTodolistsActionType = ReturnType<typeof setTodolistsAC>
+export type ClearDataActionType = ReturnType<typeof clearTodolistsDataAC>
 export type TodolistsActionsType =
     | RemoveTodolistActionType
     | AddTodolistActionType
@@ -123,6 +144,7 @@ export type TodolistsActionsType =
     | ReturnType<typeof changeTodolistFilterAC>
     | SetTodolistsActionType
     | ReturnType<typeof changeTodolistEntityStatusAC>
+    | ClearDataActionType
 export type FilterValuesType = 'all' | 'completed' | 'active'
 export type TodolistDomainType = TodolistType & {
     filter: FilterValuesType

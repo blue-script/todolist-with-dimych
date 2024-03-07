@@ -26,13 +26,6 @@ type PropsType = {
 }
 
 export const Todolist = React.memo(function ({demo = false, ...props}: PropsType) {
-    const dispatch: ThunkDispatch<AppRootStateType, any, ActionType> = useDispatch()
-
-    useEffect(() => {
-        if (demo) return
-        dispatch(fetchTasksTC(props.todolist.id))
-    }, [])
-
     console.log('Todolist is called')
     const onAllClickHandler = useCallback(() => props.changeFilter('all', props.todolist.id), [props.changeFilter, props.todolist.id])
     const onActiveClickHandler = useCallback(() => props.changeFilter('active', props.todolist.id), [props.changeFilter, props.todolist.id])
@@ -58,7 +51,8 @@ export const Todolist = React.memo(function ({demo = false, ...props}: PropsType
     }
     return (
         <div>
-            <h3><EditableSpan title={props.todolist.title} changeTaskTitle={changeTodolistTitle} disabled={props.todolist.entityStatus === 'loading'}/>
+            <h3><EditableSpan title={props.todolist.title} changeTaskTitle={changeTodolistTitle}
+                              disabled={props.todolist.entityStatus === 'loading'}/>
                 <IconButton aria-label="delete" onClick={removeTodolist}
                             disabled={props.todolist.entityStatus === 'loading'}>
                     <Delete fontSize="inherit"/>
