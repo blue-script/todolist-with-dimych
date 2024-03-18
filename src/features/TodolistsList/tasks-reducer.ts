@@ -1,10 +1,4 @@
-import {
-  TaskPriorities,
-  TaskStatuses,
-  TaskType,
-  todolistsAPI,
-  UpdateTaskModelType
-} from "../../api/todolists-api"
+import { TaskPriorities, TaskStatuses, TaskType, todolistsAPI, UpdateTaskModelType } from "../../api/todolists-api"
 import { Dispatch } from "redux"
 import { AppRootStateType } from "../../app/store"
 import { setAppStatusAC } from "../../app/app-reducer"
