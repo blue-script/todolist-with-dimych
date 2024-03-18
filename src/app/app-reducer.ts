@@ -28,6 +28,7 @@ const slice = createSlice({
 export const appReducer = slice.reducer
 export const { setAppErrorAC, setAppStatusAC, setAppInitializedAC } = slice.actions
 
+
 // thunk
 export const initializeAppTC = () => (dispatch: Dispatch) => {
   authAPI.me().then((res) => {
@@ -42,3 +43,4 @@ export const initializeAppTC = () => (dispatch: Dispatch) => {
 
 // types
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
+export type appInitialState = ReturnType<typeof slice.getInitialState>
