@@ -37,6 +37,7 @@ function App({ demo = false }: PropsType) {
   }, [])
 
   const logoutHandler = useCallback(() => {
+    console.log("click logout")
     dispatch(logoutTC())
   }, [])
 

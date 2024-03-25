@@ -45,13 +45,6 @@ export const todolistsAPI = {
   },
 }
 
-export type LoginParamsType = {
-  email: string
-  password: string
-  rememberMe: boolean
-  captcha?: string
-}
-
 export const authAPI = {
   login(data: LoginParamsType) {
     const promise = instance.post<ResponseType<{ userId?: number }>>("auth/login", data)
@@ -68,6 +61,12 @@ export const authAPI = {
 }
 
 // types
+export type LoginParamsType = {
+  email: string
+  password: string
+  rememberMe: boolean
+  captcha?: string
+}
 export type TodolistType = {
   id: string
   title: string

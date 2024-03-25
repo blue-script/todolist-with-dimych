@@ -1,45 +1,42 @@
-import { Dispatch } from "redux"
 import { authAPI } from "../api/todolists-api"
 import { setIsLoggedInAC } from "../features/Login/auth-reducer"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-const initialState = {
-  status: "idle" as RequestStatusType,
-  error: null as string | null,
-  isInitialized: false,
-}
+// thunk
+export const initializeAppTC = createAsyncThunk("app/initializeApp", async (param, { dispatch }) => {
+  const res = await authAPI.me()
+  if (res.data.resultCode === 0) {
+    dispatch(setIsLoggedInAC({ isLoggedIn: true }))
+  } else {
+  }
+
+  return
+})
 
 const slice = createSlice({
   name: "app",
-  initialState: initialState,
+  initialState: {
+    status: "idle" as RequestStatusType,
+    error: null as string | null,
+    isInitialized: false
+  },
   reducers: {
     setAppErrorAC(state, action: PayloadAction<{ error: string | null }>) {
       state.error = action.payload.error
     },
     setAppStatusAC(state, action: PayloadAction<{ status: RequestStatusType }>) {
       state.status = action.payload.status
-    },
-    setAppInitializedAC(state, action: PayloadAction<{ isInitialized: boolean }>) {
-      state.isInitialized = action.payload.isInitialized
-    },
+    }
   },
+  extraReducers: builder => {
+    builder.addCase(initializeAppTC.fulfilled, (state, action) => {
+      state.isInitialized = true
+    })
+  }
 })
 
 export const appReducer = slice.reducer
-export const { setAppErrorAC, setAppStatusAC, setAppInitializedAC } = slice.actions
-
-
-// thunk
-export const initializeAppTC = () => (dispatch: Dispatch) => {
-  authAPI.me().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setIsLoggedInAC({ isLoggedIn: true }))
-    } else {
-    }
-
-    dispatch(setAppInitializedAC({ isInitialized: true }))
-  })
-}
+export const { setAppErrorAC, setAppStatusAC } = slice.actions
 
 // types
 export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed"
